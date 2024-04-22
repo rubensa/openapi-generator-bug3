@@ -1,0 +1,5 @@
+type: "urn:problem-type:not-found"
+title: "Not Found"
+status: 404
+detail: "Entity not found"
+instance: "/sample"

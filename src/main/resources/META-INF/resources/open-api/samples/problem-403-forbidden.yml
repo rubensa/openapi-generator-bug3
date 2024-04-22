@@ -1,0 +1,5 @@
+type: "urn:problem-type:access-denied"
+title: "Forbidden"
+status: 403
+detail: "Access Denied"
+instance: "/sample"

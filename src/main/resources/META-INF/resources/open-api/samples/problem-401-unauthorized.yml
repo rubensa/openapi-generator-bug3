@@ -1,0 +1,5 @@
+type: "urn:problem-type:authentication"
+title: "Unauthorized"
+status: 401
+detail: "An Authentication object was not found in the SecurityContext"
+instance: "/sample"

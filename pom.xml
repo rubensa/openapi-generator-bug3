@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.4</version>
+    <relativePath /> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>org.eu.rubensa</groupId>
+  <artifactId>openapi-generator-bug3</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>openapi-generator-bug3</name>
+  <description>Sample to show openapi-generator bug</description>
+  <properties>
+    <java.version>21</java.version>
+    <maven.compiler.release>21</maven.compiler.release>
+    <!-- Test execution modifiers -->
+    <skipTests>false</skipTests>
+    <skipUnitTests>${skipTests}</skipUnitTests>
+    <skipIntegrationTests>${skipTests}</skipIntegrationTests>
+    <!-- Dependencies versions (not defined in parent pom) -->
+    <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+    <swagger-annotations.version>2.2.21</swagger-annotations.version>
+    <!-- Plugin versions (not defined in parent pom) -->
+    <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
+    <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+    <openapi-generator-maven-plugin.version>7.5.0</openapi-generator-maven-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <!--
+          This module provides a JsonNullable wrapper class and a Jackson module to serialize/deserialize it.
+          https://github.com/OpenAPITools/jackson-databind-nullable
+        -->
+        <groupId>org.openapitools</groupId>
+        <artifactId>jackson-databind-nullable</artifactId>
+        <version>${jackson-databind-nullable.version}</version>
+      </dependency>
+      <dependency>
+        <!--
+          Open API Specification Annotations
+          https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X%2D%2D%2DAnnotations
+        -->
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger-annotations.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <!--
+        This module provides a JsonNullable wrapper class and a Jackson module to serialize/deserialize it.
+        https://github.com/OpenAPITools/jackson-databind-nullable
+      -->
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+    </dependency>
+    <dependency>
+      <!--
+        Spring Boot Test Starter - Imports both Spring Boot test modules as well as JUnit Jupiter, AssertJ,
+      Hamcrest, and a number of other useful libraries.
+        https://docs.spring.io/spring-boot/docs/3.2.x/reference/html/features.html#features.testing
+      -->
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <!--
+        Spring Boot Starter Validation - Starter for using Java Bean Validation with Hibernate Validator
+        https://docs.spring.io/spring-boot/docs/3.2.x/reference/html/io.html#io.validation
+      -->
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <!--
+        Spring Boot Starter Web - Starter for building web, including RESTful, applications using Spring
+      MVC
+        https://docs.spring.io/spring-boot/docs/3.2.x/reference/html/web.html#web
+      -->
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <!--
+        String Testing support provided by Spring Framework
+        https://docs.spring.io/spring-framework/reference/testing.html
+      -->
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <!--
+        Open API Specification Annotations
+        https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X%2D%2D%2DAnnotations
+      -->
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <!--
+            Assist with the Maven build lifecycle
+            https://www.mojohaus.org/build-helper-maven-plugin/
+          -->
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${build-helper-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>add-source</id>
+              <!-- add-source binds by default to the lifecycle phase generate-sources -->
+              <phase>generate-sources</phase>
+              <goals>
+                <!-- Add more source directories to the POM -->
+                <goal>add-source</goal>
+              </goals>
+              <configuration>
+                <sources>
+                  <!-- Additional source directories -->
+                  <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                </sources>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <!--
+            Eclipse Maven Integration - Provides Maven integration with Eclipse IDE
+            https://www.eclipse.org/m2e/
+          -->
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>${lifecycle-mapping.version}</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <versionRange>[1.7,)</versionRange>
+                    <goals>
+                      <goal>add-source</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute></execute>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+        <plugin>
+          <!--
+            A Maven plugin to support the OpenAPI generator project
+          https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin
+          -->
+          <groupId>org.openapitools</groupId>
+          <artifactId>openapi-generator-maven-plugin</artifactId>
+          <version>${openapi-generator-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+              <configuration>
+                <configOptions>
+                  <!-- Whether to generate only API interface stubs without the server files -->
+                  <interfaceOnly>true</interfaceOnly>
+                  <!-- Generate code and provide dependencies for use with Spring Boot 3.x -->
+                  <useSpringBoot3>true</useSpringBoot3>
+                  <!-- Skip header parameters that matches given regex in the generated API methods
+                  using @ApiImplicitParams annotation -->
+                  <implicitHeadersRegex>prefer</implicitHeadersRegex>
+                </configOptions>
+                <!-- OpenAPI Spec file path -->
+                <inputSpec>
+                  ${project.basedir}/src/main/resources/META-INF/resources/open-api/sample.yml
+                </inputSpec>
+                <!-- target generator name (https://openapi-generator.tech/docs/generators/spring/) -->
+                <generatorName>spring</generatorName>
+                <!-- the default package name to use for the generated objects -->
+                <packageName>org.eu.rubensa.openapi</packageName>
+                <!-- the package to use for generated api objects/classes -->
+                <apiPackage>org.eu.rubensa.openapi.api</apiPackage>
+                <!-- the package to use for generated model objects/classes -->
+                <modelPackage>org.eu.rubensa.openapi.model</modelPackage>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <!--
+          Assist with the Maven build lifecycle
+          https://www.mojohaus.org/build-helper-maven-plugin/
+        -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <!--
+          A Maven plugin to support the OpenAPI generator project
+        https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin
+        -->
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

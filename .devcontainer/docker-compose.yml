@@ -1,0 +1,15 @@
+# 3.5 Min version needed to allow setting network name (https://github.com/docker/compose/issues/3736)
+# 3.9 Min version for 3.x that supports depends_on condition (https://github.com/compose-spec/compose-spec/blob/master/spec.md#long-syntax-1)
+# docker-compose min version that implements condition is 1.29.0 (https://github.com/docker/compose/releases/tag/1.29.0) which needs docker engine 19.03.0+
+version: '3.9'
+services:
+  openapi-generator-bug3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: openapi-generator-bug3.local.computer
+    volumes:
+      # Mounts the project folder to '/workspaces/openapi-generator-bug3'
+      - type: bind
+        source: ../
+        target: /workspaces/openapi-generator-bug3

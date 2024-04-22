@@ -1,0 +1,5 @@
+type: "urn:problem-type:null-pointer"
+title: "Internal Server Error"
+status: 500
+detail: "Internal Server Error"
+instance: "/sample"
